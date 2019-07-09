@@ -10,5 +10,5 @@ class Pokemon extends Model
     use Searchable;
 
     protected $table = 'pokemon';
-    protected $fillable = [ 'id', 'name', ];
+    protected $fillable = [ 'no', 'name', 'types', ];
 }

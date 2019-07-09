@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Pokemon;
 use Illuminate\Console\Command;
 
 class MakePokemon extends Command
@@ -40,6 +41,17 @@ class MakePokemon extends Command
         $file = file_get_contents(__DIR__ . '/jsons/kotofurumiya.pokemon.json');
         $file = mb_convert_encoding($file, 'UTF-8', 'ASCII,JIS,UTF-8,EUC-JP,SJIS-WIN');
         $file = json_decode($file, true);
-        var_dump($file[0]);
+
+        $this->info('Data import now...');
+
+        foreach ($file as $pokemon) {
+            Pokemon::create([
+                'no' => $pokemon['no'],
+                'name' => $pokemon['name'],
+                'types' => json_encode($pokemon['types']),
+            ]);
+        }
+
+        $this->info('Data import success!');
     }
 }
