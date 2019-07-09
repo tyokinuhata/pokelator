@@ -48,7 +48,7 @@ class MakePokemon extends Command
             Pokemon::create([
                 'no' => $pokemon['no'],
                 'name' => $pokemon['name'],
-                'types' => json_encode($pokemon['types']),
+                'types' => json_encode($pokemon['types'], JSON_UNESCAPED_UNICODE),
             ]);
         }
 
