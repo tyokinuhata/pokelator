@@ -7,6 +7,7 @@
       <button type="button" class="btn btn-primary col-md-3" @click="search">Search</button>
     </div>
     <div v-if="pokemon">
+      <img :src="`storage/images/${pokemon.image}`" alt="" width="200px">
       <table class="table table-striped table-bordered">
         <tr>
           <th>No</th>

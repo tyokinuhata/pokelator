@@ -62,7 +62,6 @@ class MakePokemon extends Command
             ]);
         }
 
-
         $this->info('Data import success!');
     }
 }
