@@ -17,7 +17,8 @@ class CreatePokemonTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('no');
             $table->string('name');
-            $table->json('types');
+            $table->json('types')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

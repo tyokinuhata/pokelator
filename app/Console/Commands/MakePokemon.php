@@ -38,19 +38,30 @@ class MakePokemon extends Command
      */
     public function handle()
     {
-        $file = file_get_contents(__DIR__ . '/jsons/kotofurumiya.pokemon.json');
-        $file = mb_convert_encoding($file, 'UTF-8', 'ASCII,JIS,UTF-8,EUC-JP,SJIS-WIN');
-        $file = json_decode($file, true);
+        $master1 = file_get_contents(__DIR__ . '/jsons/kotofurumiya.pokemon.json');
+        $master1 = mb_convert_encoding($master1, 'UTF-8', 'ASCII,JIS,UTF-8,EUC-JP,SJIS-WIN');
+        $master1 = json_decode($master1, true);
+
+        $master2 = file_get_contents(__DIR__ . '/jsons/fanzeyi.pokemon.json');
+        $master2 = mb_convert_encoding($master2, 'UTF-8', 'ASCII,JIS,UTF-8,EUC-JP,SJIS-WIN');
+        $master2 = json_decode($master2, true);
 
         $this->info('Data import now...');
 
-        foreach ($file as $pokemon) {
+        foreach ($master1 as $pokemon) {
             Pokemon::create([
-                'no' => $pokemon['no'],
-                'name' => $pokemon['name'],
-                'types' => json_encode($pokemon['types'], JSON_UNESCAPED_UNICODE),
+                'no'=> $pokemon['no'],
+                'name'=> $pokemon['name'],
+                'types'=> $pokemon['types'],
             ]);
         }
+
+        foreach ($master2 as $pokemon) {
+            Pokemon::where('no', $pokemon['id'])->update([
+                'image' => str_pad($pokemon['id'], 3, 0, STR_PAD_LEFT) . $pokemon['name']['english'] . '.png',
+            ]);
+        }
+
 
         $this->info('Data import success!');
     }

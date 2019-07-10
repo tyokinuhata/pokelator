@@ -11,4 +11,14 @@ class Pokemon extends Model
 
     protected $table = 'pokemon';
     protected $fillable = [ 'no', 'name', 'types', ];
+    protected $casts = [ 'types' => 'json' ];
+
+    public function toSearchableArray()
+    {
+        return [
+            'id'    => $this->id,
+            'no'    => $this->no,
+            'name'  => $this->name,
+        ];
+    }
 }
