@@ -8,7 +8,7 @@
     </head>
     <body>
         <div id="app">
-            <example-component></example-component>
+            <pokelator></pokelator>
         </div>
 
         <script src=" {{ mix('js/app.js') }} "></script>
