@@ -21,7 +21,7 @@
           <th>タイプ</th>
           <td>
             <h5 class="d-inline mr-1" v-for="type in pokemon.types">
-              <span class="badge" :class="getBadgeClass(type)">{{ type }}</span>
+              <span class="badge text-white" :class="getBadgeClass(type)">{{ type }}</span>
             </h5>
           </td>
         </tr>
@@ -29,7 +29,7 @@
           <th>ばつぐん</th>
           <td>
             <h5 class="d-inline mr-1" v-for="type in affinities.good">
-              <span class="badge" :class="getBadgeClass(type)">{{ type }}</span>
+              <span class="badge text-white" :class="getBadgeClass(type)">{{ type }}</span>
             </h5>
           </td>
         </tr>
@@ -37,7 +37,7 @@
           <th>等倍</th>
           <td>
             <h5 class="d-inline mr-1" v-for="type in affinities.normal">
-              <span class="badge" :class="getBadgeClass(type)">{{ type }}</span>
+              <span class="badge text-white" :class="getBadgeClass(type)">{{ type }}</span>
             </h5>
           </td>
         </tr>
@@ -45,7 +45,7 @@
           <th>いまひとつ</th>
           <td>
             <h5 class="d-inline mr-1" v-for="type in affinities.poor">
-              <span class="badge" :class="getBadgeClass(type)">{{ type }}</span>
+              <span class="badge text-white" :class="getBadgeClass(type)">{{ type }}</span>
             </h5>
           </td>
         </tr>
@@ -53,7 +53,7 @@
           <th>なし</th>
           <td>
             <h5 class="d-inline mr-1" v-for="type in affinities.bad">
-              <span class="badge" :class="getBadgeClass(type)">{{ type }}</span>
+              <span class="badge text-white" :class="getBadgeClass(type)">{{ type }}</span>
             </h5>
           </td>
         </tr>
