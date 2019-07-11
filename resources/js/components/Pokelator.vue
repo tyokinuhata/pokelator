@@ -6,8 +6,8 @@
       <input type="text" class="form-control col-md-9" v-model="keyword" @keyup.enter="searchPokemon" autofocus>
       <button type="button" class="btn btn-primary col-md-3" @click="searchPokemon">Search</button>
     </div>
-    <div v-if="pokemon">
-      <img :src="`storage/images/${pokemon.image}`" alt="" width="200px">
+    <div v-if="pokemon.hasOwnProperty('name')">
+      <img :src="`storage/images/${pokemon.image}`" alt="" class="mb-2" width="200px">
       <table class="table table-striped table-bordered">
         <tr>
           <th>No</th>
@@ -59,6 +59,9 @@
         </tr>
       </table>
     </div>
+    <div v-if="!pokemon.hasOwnProperty('name')">
+      <p class="text-center">該当するポケモンがいませんでした</p>
+    </div>
   </div>
 </template>
 
@@ -67,8 +70,8 @@ export default {
   data() {
     return {
       keyword: '',
-      pokemon: null,
-      affinities: []
+      pokemon: [],
+      affinities: [],
     }
   },
   methods: {
@@ -76,6 +79,7 @@ export default {
     searchPokemon() {
       axios.get(`/api/pokemon/search/${this.keyword}`).then(response => {
         this.pokemon = response.data;
+        console.log(response.data.hasOwnProperty('name'))
         this.fetchAffinities(response.data.types);
       });
     },
