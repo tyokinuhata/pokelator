@@ -33,7 +33,7 @@ class PokemonController extends Controller
         }
 
         foreach ($affinities as $key => $affinity) {
-            $affinities[$key] = $affinity->collapse();
+            $affinities[$key] = $affinity->collapse()->unique();
         }
 
         return response($affinities, 200);
