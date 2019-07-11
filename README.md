@@ -8,6 +8,8 @@ Pokemon damage simulator
 ```bash
 $ cp .env.example .env
 $ touch database/database.sqlite
+$ composer install
+$ npm install
 $ php artisan migrate
 $ php artisan make:pokemon
 $ php artisan make:types
