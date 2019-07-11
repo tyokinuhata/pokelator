@@ -3,8 +3,8 @@
     <h1 class="text-center">Pokelator</h1>
     <h2 class="text-center">Pokemon damage simulator</h2>
     <div class="row mb-4">
-      <input type="text" class="form-control col-md-9" v-model="keyword" @keyup.enter="search" autofocus>
-      <button type="button" class="btn btn-primary col-md-3" @click="search">Search</button>
+      <input type="text" class="form-control col-md-9" v-model="keyword" @keyup.enter="searchPokemon" autofocus>
+      <button type="button" class="btn btn-primary col-md-3" @click="searchPokemon">Search</button>
     </div>
     <div v-if="pokemon">
       <img :src="`storage/images/${pokemon.image}`" alt="" width="200px">
@@ -21,39 +21,39 @@
           <th>タイプ</th>
           <td>
             <h5 class="d-inline mr-1" v-for="type in pokemon.types">
-              <span class="badge" :class="getBadgeStyle(type)">{{ type }}</span>
+              <span class="badge" :class="getBadgeClass(type)">{{ type }}</span>
             </h5>
           </td>
         </tr>
         <tr>
           <th>ばつぐん</th>
           <td>
-            <h5 class="d-inline mr-1" v-for="affinity in affinities.good">
-              <span class="badge" :class="getBadgeStyle(affinity)">{{ affinity }}</span>
+            <h5 class="d-inline mr-1" v-for="type in affinities.good">
+              <span class="badge" :class="getBadgeClass(type)">{{ type }}</span>
             </h5>
           </td>
         </tr>
         <tr>
           <th>等倍</th>
           <td>
-            <h5 class="d-inline mr-1" v-for="affinity in affinities.normal">
-              <span class="badge" :class="getBadgeStyle(affinity)">{{ affinity }}</span>
+            <h5 class="d-inline mr-1" v-for="type in affinities.normal">
+              <span class="badge" :class="getBadgeClass(type)">{{ type }}</span>
             </h5>
           </td>
         </tr>
         <tr>
           <th>いまひとつ</th>
           <td>
-            <h5 class="d-inline mr-1" v-for="affinity in affinities.poor">
-              <span class="badge" :class="getBadgeStyle(affinity)">{{ affinity }}</span>
+            <h5 class="d-inline mr-1" v-for="type in affinities.poor">
+              <span class="badge" :class="getBadgeClass(type)">{{ type }}</span>
             </h5>
           </td>
         </tr>
         <tr>
           <th>なし</th>
           <td>
-            <h5 class="d-inline mr-1" v-for="affinity in affinities.bad">
-              <span class="badge" :class="getBadgeStyle(affinity)">{{ affinity }}</span>
+            <h5 class="d-inline mr-1" v-for="type in affinities.bad">
+              <span class="badge" :class="getBadgeClass(type)">{{ type }}</span>
             </h5>
           </td>
         </tr>
@@ -72,13 +72,15 @@ export default {
     }
   },
   methods: {
-    search() {
+    // ポケモンの検索
+    searchPokemon() {
       axios.get(`/api/pokemon/search/${this.keyword}`).then(response => {
         this.pokemon = response.data;
-        this.affinity(response.data.types);
+        this.fetchAffinities(response.data.types);
       });
     },
-    affinity(types) {
+    // ポケモンのタイプに対するわざの相性を取得
+    fetchAffinities(types) {
       axios.get(`/api/pokemon/affinity`, {
         params: {
           types: types
@@ -87,7 +89,8 @@ export default {
         this.affinities = response.data;
       });
     },
-    getBadgeStyle(type) {
+    // ポケモンのタイプによってbadgeのclassを設定
+    getBadgeClass(type) {
       const obj = {};
 
       if      (type === 'ノーマル') obj['badge-normal'] = true;

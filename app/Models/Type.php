@@ -4,6 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * ポケモンのタイプ
+ *
+ * Class Type
+ * @package App\Models
+ */
 class Type extends Model
 {
     protected $fillable = ['name', 'good', 'normal', 'poor', 'bad'];

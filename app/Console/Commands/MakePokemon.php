@@ -5,6 +5,12 @@ namespace App\Console\Commands;
 use App\Models\Pokemon;
 use Illuminate\Console\Command;
 
+/**
+ * ポケモンデータを作成するコマンド
+ *
+ * Class MakePokemon
+ * @package App\Console\Commands
+ */
 class MakePokemon extends Command
 {
     /**

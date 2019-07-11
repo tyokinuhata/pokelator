@@ -5,6 +5,12 @@ namespace App\Console\Commands;
 use App\Models\Type;
 use Illuminate\Console\Command;
 
+/**
+ * ポケモンのタイプを作成するコマンド
+ *
+ * Class MakeTypes
+ * @package App\Console\Commands
+ */
 class MakeTypes extends Command
 {
     /**
