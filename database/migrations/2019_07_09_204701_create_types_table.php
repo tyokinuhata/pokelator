@@ -16,10 +16,10 @@ class CreateTypesTable extends Migration
         Schema::create('types', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-//            $table->json('good')->comment('ばつぐん');
-//            $table->json('normal')->comment('等倍');
-//            $table->json('poor')->comment('いまひとつ');
-//            $table->json('bad')->comment('効果がない');
+            $table->json('good')->nullable()->comment('ばつぐん');
+            $table->json('normal')->nullable()->comment('等倍');
+            $table->json('poor')->nullable()->comment('いまひとつ');
+            $table->json('bad')->nullable()->comment('効果がない');
             $table->timestamps();
         });
     }

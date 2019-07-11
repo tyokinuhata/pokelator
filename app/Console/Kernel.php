@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\MakePokemon;
+use App\Console\Commands\MakeTypes;
 use App\Console\Commands\RegisterPokemon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -16,6 +17,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         MakePokemon::class,
+        MakeTypes::class,
     ];
 
     /**

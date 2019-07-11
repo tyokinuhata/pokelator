@@ -14,31 +14,46 @@
           <td>{{ pokemon.no }}</td>
         </tr>
         <tr>
-          <th>Name</th>
+          <th>名前</th>
           <td>{{ pokemon.name }}</td>
         </tr>
         <tr>
           <th>タイプ</th>
           <td>
             <h5 class="d-inline mr-1" v-for="type in pokemon.types">
-              <span class="badge badge-normal" v-if="type === 'ノーマル'">{{ type }}</span>
-              <span class="badge badge-fighting" v-if="type === 'かくとう'">{{ type }}</span>
-              <span class="badge badge-flying" v-if="type === 'ひこう'">{{ type }}</span>
-              <span class="badge badge-poison" v-if="type === 'どく'">{{ type }}</span>
-              <span class="badge badge-ground" v-if="type === 'じめん'">{{ type }}</span>
-              <span class="badge badge-rock" v-if="type === 'いわ'">{{ type }}</span>
-              <span class="badge badge-bug" v-if="type === 'むし'">{{ type }}</span>
-              <span class="badge badge-ghost" v-if="type === 'ゴースト'">{{ type }}</span>
-              <span class="badge badge-steel" v-if="type === 'はがね'">{{ type }}</span>
-              <span class="badge badge-fire" v-if="type === 'ほのお'">{{ type }}</span>
-              <span class="badge badge-water" v-if="type === 'みず'">{{ type }}</span>
-              <span class="badge badge-grass" v-if="type === 'くさ'">{{ type }}</span>
-              <span class="badge badge-electric" v-if="type === 'でんき'">{{ type }}</span>
-              <span class="badge badge-psychic" v-if="type === 'エスパー'">{{ type }}</span>
-              <span class="badge badge-ice" v-if="type === 'こおり'">{{ type }}</span>
-              <span class="badge badge-dragon" v-if="type === 'ドラゴン'">{{ type }}</span>
-              <span class="badge badge-dark" v-if="type === 'あく'">{{ type }}</span>
-              <span class="badge badge-fairy" v-if="type === 'フェアリー'">{{ type }}</span>
+              <span class="badge" :class="getBadgeStyle(type)">{{ type }}</span>
+            </h5>
+          </td>
+        </tr>
+        <tr>
+          <th>ばつぐん</th>
+          <td>
+            <h5 class="d-inline mr-1" v-for="affinity in affinities.good">
+              <span class="badge" :class="getBadgeStyle(affinity)">{{ affinity }}</span>
+            </h5>
+          </td>
+        </tr>
+        <tr>
+          <th>等倍</th>
+          <td>
+            <h5 class="d-inline mr-1" v-for="affinity in affinities.normal">
+              <span class="badge" :class="getBadgeStyle(affinity)">{{ affinity }}</span>
+            </h5>
+          </td>
+        </tr>
+        <tr>
+          <th>いまひとつ</th>
+          <td>
+            <h5 class="d-inline mr-1" v-for="affinity in affinities.poor">
+              <span class="badge" :class="getBadgeStyle(affinity)">{{ affinity }}</span>
+            </h5>
+          </td>
+        </tr>
+        <tr>
+          <th>なし</th>
+          <td>
+            <h5 class="d-inline mr-1" v-for="affinity in affinities.bad">
+              <span class="badge" :class="getBadgeStyle(affinity)">{{ affinity }}</span>
             </h5>
           </td>
         </tr>
@@ -53,14 +68,49 @@ export default {
     return {
       keyword: '',
       pokemon: null,
+      affinities: []
     }
   },
   methods: {
     search() {
       axios.get(`/api/pokemon/search/${this.keyword}`).then(response => {
         this.pokemon = response.data;
+        this.affinity(response.data.types);
       });
-    }
+    },
+    affinity(types) {
+      axios.get(`/api/pokemon/affinity`, {
+        params: {
+          types: types
+        }
+      }).then(response => {
+        this.affinities = response.data;
+      });
+    },
+    getBadgeStyle(type) {
+      const obj = {};
+
+      if      (type === 'ノーマル') obj['badge-normal'] = true;
+      else if (type === 'かくとう') obj['badge-fighting'] = true;
+      else if (type === 'ひこう') obj['badge-flying'] = true;
+      else if (type === 'どく') obj['badge-poison'] = true;
+      else if (type === 'じめん') obj['badge-ground'] = true;
+      else if (type === 'いわ') obj['badge-rock'] = true;
+      else if (type === 'むし') obj['badge-bug'] = true;
+      else if (type === 'ゴースト') obj['badge-ghost'] = true;
+      else if (type === 'はがね') obj['badge-steel'] = true;
+      else if (type === 'ほのお') obj['badge-fire'] = true;
+      else if (type === 'みず') obj['badge-water'] = true;
+      else if (type === 'くさ') obj['badge-grass'] = true;
+      else if (type === 'でんき') obj['badge-electric'] = true;
+      else if (type === 'エスパー') obj['badge-psychic'] = true;
+      else if (type === 'こおり') obj['badge-ice'] = true;
+      else if (type === 'ドラゴン') obj['badge-dragon'] = true;
+      else if (type === 'あく') obj['badge-dark'] = true;
+      else if (type === 'フェアリー') obj['badge-fairy'] = true;
+
+      return obj;
+    },
   }
 }
 </script>
